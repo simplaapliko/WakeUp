@@ -160,6 +160,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private static final int CONTEXT_MENU_DELETE = 0;
 
+    private static final String PREF_EXTERNAL_ID = "external_id";
+
     private ListView mList;
 
     private long mId;
@@ -172,6 +174,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
 
     // Public API
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mId = getExternalId();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -275,12 +284,27 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         alarm.setTime(calendar.getTimeInMillis());
         alarm.setEnabled(true);
         alarm.setTitle("Title");
-        alarm.setMessage("Notification message");
+        alarm.setMessage("Notification message, externalId: " + mId);
         alarm.setAlarmHandleListener(SendNotification.class.getCanonicalName());
 
         new AlarmController().setAlarm(getContext(), alarm);
 
         restartLoader();
+
+        saveExternalId(mId);
+    }
+
+    private long getExternalId() {
+        return getActivity().getPreferences(Context.MODE_PRIVATE)
+                .getLong(PREF_EXTERNAL_ID, 0);
+    }
+
+
+    private void saveExternalId(long id) {
+        getActivity().getPreferences(Context.MODE_PRIVATE)
+                .edit()
+                .putLong(PREF_EXTERNAL_ID, id)
+                .commit();
     }
 
 }
