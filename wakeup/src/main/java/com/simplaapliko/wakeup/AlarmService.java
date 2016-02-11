@@ -47,6 +47,10 @@ public class AlarmService extends IntentService {
         } else {
             Log.d(TAG, "not able to call to onHandle, OnAlarmHandleListener is null");
         }
+
+        // Finish the execution from a previous startWakefulService(Context, Intent).
+        // Any wake lock that was being held will now be released.
+        AlarmReceiver.completeWakefulIntent(intent);
     }
 
 }
