@@ -25,9 +25,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ResourceCursorAdapter;
@@ -155,9 +158,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public static final int REQUEST_SELECT_DATE = 0;
     public static final String SELECTED_DATE_EXTRA = "com.simplaapliko.wakeup.sample.SELECTED_DATE_EXTRA";
 
+    private static final int CONTEXT_MENU_DELETE = 0;
+
     private ListView mList;
 
-    private int mId;
+    private long mId;
 
 
     // Constructors
@@ -175,6 +180,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         mList = (ListView) rootView.findViewById(R.id.list);
+        registerForContextMenu(mList);
 
         Button insert = (Button) rootView.findViewById(R.id.set);
         insert.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +229,30 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         Date date = (Date) data.getSerializableExtra(SELECTED_DATE_EXTRA);
         setAlarm(date);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(0, CONTEXT_MENU_DELETE, 0, "Delete");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case CONTEXT_MENU_DELETE:
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+                long id = info.id;
+                Alarm alarm = new AlarmDAO(getContext()).select(id);
+
+                new AlarmController().cancelAlarm(getContext(), alarm);
+
+                restartLoader();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
 
