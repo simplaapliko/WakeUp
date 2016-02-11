@@ -78,6 +78,7 @@ public class AlarmDAO {
 
         qb.setTables(Alarm.TABLE);
         qb.appendWhere(Alarm.Columns._ID);
+        qb.appendWhere("=");
         qb.appendWhere(Long.toString(rowId));
 
         Cursor cursor = qb.query(db, projection, null, null,
