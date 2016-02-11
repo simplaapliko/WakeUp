@@ -22,7 +22,7 @@ import android.provider.BaseColumns;
 
 public class Alarm implements Parcelable {
 
-    public static final String TABLE = "alarms";
+    public static final String TABLE = "alarm";
 
     public static class Columns implements BaseColumns {
 
