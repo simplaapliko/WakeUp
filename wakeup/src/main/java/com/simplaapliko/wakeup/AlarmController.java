@@ -78,8 +78,20 @@ public class AlarmController {
     }
 
     public void disableAlarm(Context context, Alarm alarm) {
-
         Log.d(TAG, "disableAlarm");
+
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.setAction(ALARM_ALERT_ACTION);
+
+        int alarmId = (int) alarm.getId();
+
+        PendingIntent sender = PendingIntent.getBroadcast(
+                context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        sender.cancel();
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(sender);
     }
 
 }
