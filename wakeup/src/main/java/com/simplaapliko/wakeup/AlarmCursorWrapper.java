@@ -38,8 +38,8 @@ public class AlarmCursorWrapper extends CursorWrapper {
             return null;
         }
 
-        int id = getInt(Alarm.Columns.ID_INDEX);
-        int externalId = getInt(Alarm.Columns.EXTERNAL_ID_INDEX);
+        long id = getLong(Alarm.Columns.ID_INDEX);
+        long externalId = getLong(Alarm.Columns.EXTERNAL_ID_INDEX);
         int hour = getInt(Alarm.Columns.HOUR_INDEX);
         int minutes = getInt(Alarm.Columns.MINUTES_INDEX);
         long time = getLong(Alarm.Columns.TIME_INDEX);

@@ -41,7 +41,7 @@ public class AlarmController {
     public void setAlarm(Context context, Alarm alarm) {
         Log.d(TAG, "setAlarm");
 
-        int id = new AlarmDAO(context)
+        long id = new AlarmDAO(context)
                 .insert(alarm);
 
         alarm.setId(id);
@@ -67,7 +67,7 @@ public class AlarmController {
         intent.setAction(ALARM_ALERT_ACTION);
         intent.putExtra(ALARM_EXTRA, alarm);
 
-        int alarmId = alarm.getId();
+        int alarmId = (int) alarm.getId();
         long triggerAt = alarm.getTime();
 
         PendingIntent sender = PendingIntent.getBroadcast(

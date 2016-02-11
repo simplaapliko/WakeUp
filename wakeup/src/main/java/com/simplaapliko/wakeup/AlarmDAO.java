@@ -92,7 +92,7 @@ public class AlarmDAO {
         }
     }
 
-    public int insert(Alarm alarm) {
+    public long insert(Alarm alarm) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -105,7 +105,7 @@ public class AlarmDAO {
         cv.put(Alarm.Columns.MESSAGE, alarm.getMessage());
         cv.put(Alarm.Columns.ALARM_HANDLER_LISTENER, alarm.getAlarmHandleListener());
 
-        int rowId = (int) db.insert(Alarm.TABLE, null, cv);
+        long rowId = db.insert(Alarm.TABLE, null, cv);
         if (rowId < 0) {
             throw new SQLException("Failed to insert Alarm " + cv);
         }
@@ -116,7 +116,7 @@ public class AlarmDAO {
     public int update(Alarm alarm) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count;
-        int rowId = alarm.getId();
+        long rowId = alarm.getId();
 
         ContentValues cv = new ContentValues();
         cv.put(Alarm.Columns.EXTERNAL_ID, alarm.getExternalId());
@@ -138,7 +138,7 @@ public class AlarmDAO {
     public int delete(Alarm alarm) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count;
-        int rowId = alarm.getId();
+        long rowId = alarm.getId();
 
         String selection = Alarm.Columns._ID + "=" + rowId;
 

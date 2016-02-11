@@ -48,8 +48,8 @@ public class Alarm implements Parcelable {
 
     public static final int NOT_SET = -1;
 
-    private int mId;
-    private int mExternalId;
+    private long mId;
+    private long mExternalId;
     private int mHour;
     private int mMinutes;
     private long mTime;
@@ -61,19 +61,19 @@ public class Alarm implements Parcelable {
     public Alarm() {
     }
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         mId = id;
     }
 
-    public int getExternalId() {
+    public long getExternalId() {
         return mExternalId;
     }
 
-    public void setExternalId(int externalId) {
+    public void setExternalId(long externalId) {
         mExternalId = externalId;
     }
 
@@ -152,8 +152,8 @@ public class Alarm implements Parcelable {
     // Parcelable
 
     protected Alarm(Parcel in) {
-        mId = in.readInt();
-        mExternalId = in.readInt();
+        mId = in.readLong();
+        mExternalId = in.readLong();
         mHour = in.readInt();
         mMinutes = in.readInt();
         mTime = in.readLong();
@@ -165,8 +165,8 @@ public class Alarm implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mId);
-        dest.writeInt(mExternalId);
+        dest.writeLong(mId);
+        dest.writeLong(mExternalId);
         dest.writeInt(mHour);
         dest.writeInt(mMinutes);
         dest.writeLong(mTime);
