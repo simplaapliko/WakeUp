@@ -67,7 +67,7 @@ public class AlarmController {
         intent.setAction(ALARM_ALERT_ACTION);
         intent.putExtra(ALARM_EXTRA, alarm);
 
-        int alarmId = alarm.getExternalId();
+        int alarmId = alarm.getId();
         long triggerAt = alarm.getTime();
 
         PendingIntent sender = PendingIntent.getBroadcast(
