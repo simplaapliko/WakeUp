@@ -36,7 +36,7 @@ public class SendNotification extends AlarmHandleListener {
         Alarm alarm = intent.getParcelableExtra(AlarmController.ALARM_EXTRA);
         int smallIcon = R.mipmap.ic_launcher;
 
-        int id = alarm.getExternalId();
+        int id = (int) alarm.getExternalId();
         String title = alarm.getTitle();
         String text = alarm.getMessage();
         long when = alarm.getTime();
