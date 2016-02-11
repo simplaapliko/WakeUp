@@ -40,7 +40,7 @@ public class Database extends SQLiteOpenHelper {
                         Alarm.Columns.ENABLED + " INTEGER NOT NULL, " +
                         Alarm.Columns.TITLE + " TEXT, " +
                         Alarm.Columns.MESSAGE + " TEXT, " +
-                        Alarm.Columns.ALARM_HANDLER_LISTENER + " TEXT);"
+                        Alarm.Columns.ALARM_HANDLE_LISTENER + " TEXT);"
         );
     }
 

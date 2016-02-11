@@ -46,7 +46,7 @@ public class AlarmCursorWrapper extends CursorWrapper {
         boolean enabled = getInt(Alarm.Columns.ENABLED_INDEX) == 1;
         String title = getString(Alarm.Columns.TITLE_INDEX);
         String message = getString(Alarm.Columns.MESSAGE_INDEX);
-        String alarmHandleListener = getString(Alarm.Columns.ALARM_HANDLER_LISTENER_INDEX);
+        String alarmHandleListener = getString(Alarm.Columns.ALARM_HANDLE_LISTENER_INDEX);
 
         Alarm alarm = new Alarm();
         alarm.setId(id);

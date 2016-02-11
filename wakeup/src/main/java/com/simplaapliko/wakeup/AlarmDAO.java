@@ -48,7 +48,7 @@ public class AlarmDAO {
                 Alarm.Columns.ENABLED,
                 Alarm.Columns.TITLE,
                 Alarm.Columns.MESSAGE,
-                Alarm.Columns.ALARM_HANDLER_LISTENER
+                Alarm.Columns.ALARM_HANDLE_LISTENER
         };
 
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
@@ -71,7 +71,7 @@ public class AlarmDAO {
                 Alarm.Columns.ENABLED,
                 Alarm.Columns.TITLE,
                 Alarm.Columns.MESSAGE,
-                Alarm.Columns.ALARM_HANDLER_LISTENER
+                Alarm.Columns.ALARM_HANDLE_LISTENER
         };
 
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -104,7 +104,7 @@ public class AlarmDAO {
         cv.put(Alarm.Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
         cv.put(Alarm.Columns.TITLE, alarm.getTitle());
         cv.put(Alarm.Columns.MESSAGE, alarm.getMessage());
-        cv.put(Alarm.Columns.ALARM_HANDLER_LISTENER, alarm.getAlarmHandleListener());
+        cv.put(Alarm.Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
 
         long rowId = db.insert(Alarm.TABLE, null, cv);
         if (rowId < 0) {
@@ -127,7 +127,7 @@ public class AlarmDAO {
         cv.put(Alarm.Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
         cv.put(Alarm.Columns.TITLE, alarm.getTitle());
         cv.put(Alarm.Columns.MESSAGE, alarm.getMessage());
-        cv.put(Alarm.Columns.ALARM_HANDLER_LISTENER, alarm.getAlarmHandleListener());
+        cv.put(Alarm.Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
 
         String selection = Alarm.Columns._ID + "=" + rowId;
 
