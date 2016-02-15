@@ -31,16 +31,16 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + Alarm.TABLE + " (" +
-                        Alarm.Columns._ID + " INTEGER PRIMARY KEY, " +
-                        Alarm.Columns.EXTERNAL_ID + " INTEGER NOT NULL, " +
-                        Alarm.Columns.HOUR + " INTEGER NOT NULL, " +
-                        Alarm.Columns.MINUTES + " INTEGER NOT NULL, " +
-                        Alarm.Columns.TIME + " INTEGER, " +
-                        Alarm.Columns.ENABLED + " INTEGER NOT NULL, " +
-                        Alarm.Columns.TITLE + " TEXT, " +
-                        Alarm.Columns.MESSAGE + " TEXT, " +
-                        Alarm.Columns.ALARM_HANDLE_LISTENER + " TEXT);"
+        db.execSQL("CREATE TABLE " + AlarmDAO.TABLE + " (" +
+                        AlarmDAO.Columns._ID + " INTEGER PRIMARY KEY, " +
+                        AlarmDAO.Columns.EXTERNAL_ID + " INTEGER NOT NULL, " +
+                        AlarmDAO.Columns.HOUR + " INTEGER NOT NULL, " +
+                        AlarmDAO.Columns.MINUTES + " INTEGER NOT NULL, " +
+                        AlarmDAO.Columns.TIME + " INTEGER, " +
+                        AlarmDAO.Columns.ENABLED + " INTEGER NOT NULL, " +
+                        AlarmDAO.Columns.TITLE + " TEXT, " +
+                        AlarmDAO.Columns.MESSAGE + " TEXT, " +
+                        AlarmDAO.Columns.ALARM_HANDLE_LISTENER + " TEXT);"
         );
     }
 

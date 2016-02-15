@@ -18,33 +18,8 @@ package com.simplaapliko.wakeup;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.BaseColumns;
 
 public class Alarm implements Parcelable {
-
-    public static final String TABLE = "alarm";
-
-    public static class Columns implements BaseColumns {
-
-        public static final String EXTERNAL_ID = "external_id";
-        public static final String HOUR = "hour";
-        public static final String MINUTES = "minutes";
-        public static final String TIME = "time";
-        public static final String ENABLED = "enabled";
-        public static final String TITLE = "title";
-        public static final String MESSAGE = "message";
-        public static final String ALARM_HANDLE_LISTENER = "alarm_handle_listener";
-
-        public static final int ID_INDEX = 0;
-        public static final int EXTERNAL_ID_INDEX = 1;
-        public static final int HOUR_INDEX = 2;
-        public static final int MINUTES_INDEX = 3;
-        public static final int TIME_INDEX = 4;
-        public static final int ENABLED_INDEX = 5;
-        public static final int TITLE_INDEX = 6;
-        public static final int MESSAGE_INDEX = 7;
-        public static final int ALARM_HANDLE_LISTENER_INDEX = 8;
-    }
 
     public static final int NOT_SET = -1;
 

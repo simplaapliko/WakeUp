@@ -23,8 +23,34 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.provider.BaseColumns;
 
 public class AlarmDAO {
+
+    public static final String TABLE = "alarm";
+
+    public static class Columns implements BaseColumns {
+
+        public static final String EXTERNAL_ID = "external_id";
+        public static final String HOUR = "hour";
+        public static final String MINUTES = "minutes";
+        public static final String TIME = "time";
+        public static final String ENABLED = "enabled";
+        public static final String TITLE = "title";
+        public static final String MESSAGE = "message";
+        public static final String ALARM_HANDLE_LISTENER = "alarm_handle_listener";
+
+        public static final int ID_INDEX = 0;
+        public static final int EXTERNAL_ID_INDEX = 1;
+        public static final int HOUR_INDEX = 2;
+        public static final int MINUTES_INDEX = 3;
+        public static final int TIME_INDEX = 4;
+        public static final int ENABLED_INDEX = 5;
+        public static final int TITLE_INDEX = 6;
+        public static final int MESSAGE_INDEX = 7;
+        public static final int ALARM_HANDLE_LISTENER_INDEX = 8;
+    }
+
 
     private SQLiteOpenHelper mOpenHelper;
 
@@ -37,18 +63,18 @@ public class AlarmDAO {
     public AlarmCursorWrapper select() {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        qb.setTables(Alarm.TABLE);
+        qb.setTables(TABLE);
 
         String[] projection = {
-                Alarm.Columns._ID,
-                Alarm.Columns.EXTERNAL_ID,
-                Alarm.Columns.HOUR,
-                Alarm.Columns.MINUTES,
-                Alarm.Columns.TIME,
-                Alarm.Columns.ENABLED,
-                Alarm.Columns.TITLE,
-                Alarm.Columns.MESSAGE,
-                Alarm.Columns.ALARM_HANDLE_LISTENER
+                Columns._ID,
+                Columns.EXTERNAL_ID,
+                Columns.HOUR,
+                Columns.MINUTES,
+                Columns.TIME,
+                Columns.ENABLED,
+                Columns.TITLE,
+                Columns.MESSAGE,
+                Columns.ALARM_HANDLE_LISTENER
         };
 
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
@@ -63,21 +89,21 @@ public class AlarmDAO {
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
         String[] projection = {
-                Alarm.Columns._ID,
-                Alarm.Columns.EXTERNAL_ID,
-                Alarm.Columns.HOUR,
-                Alarm.Columns.MINUTES,
-                Alarm.Columns.TIME,
-                Alarm.Columns.ENABLED,
-                Alarm.Columns.TITLE,
-                Alarm.Columns.MESSAGE,
-                Alarm.Columns.ALARM_HANDLE_LISTENER
+                Columns._ID,
+                Columns.EXTERNAL_ID,
+                Columns.HOUR,
+                Columns.MINUTES,
+                Columns.TIME,
+                Columns.ENABLED,
+                Columns.TITLE,
+                Columns.MESSAGE,
+                Columns.ALARM_HANDLE_LISTENER
         };
 
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        qb.setTables(Alarm.TABLE);
-        qb.appendWhere(Alarm.Columns._ID);
+        qb.setTables(TABLE);
+        qb.appendWhere(Columns._ID);
         qb.appendWhere("=");
         qb.appendWhere(Long.toString(rowId));
 
@@ -97,16 +123,16 @@ public class AlarmDAO {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(Alarm.Columns.EXTERNAL_ID, alarm.getExternalId());
-        cv.put(Alarm.Columns.HOUR, alarm.getHour());
-        cv.put(Alarm.Columns.MINUTES, alarm.getMinutes());
-        cv.put(Alarm.Columns.TIME, alarm.getTime());
-        cv.put(Alarm.Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
-        cv.put(Alarm.Columns.TITLE, alarm.getTitle());
-        cv.put(Alarm.Columns.MESSAGE, alarm.getMessage());
-        cv.put(Alarm.Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
+        cv.put(Columns.EXTERNAL_ID, alarm.getExternalId());
+        cv.put(Columns.HOUR, alarm.getHour());
+        cv.put(Columns.MINUTES, alarm.getMinutes());
+        cv.put(Columns.TIME, alarm.getTime());
+        cv.put(Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
+        cv.put(Columns.TITLE, alarm.getTitle());
+        cv.put(Columns.MESSAGE, alarm.getMessage());
+        cv.put(Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
 
-        long rowId = db.insert(Alarm.TABLE, null, cv);
+        long rowId = db.insert(TABLE, null, cv);
         if (rowId < 0) {
             throw new SQLException("Failed to insert Alarm " + cv);
         }
@@ -120,18 +146,18 @@ public class AlarmDAO {
         long rowId = alarm.getId();
 
         ContentValues cv = new ContentValues();
-        cv.put(Alarm.Columns.EXTERNAL_ID, alarm.getExternalId());
-        cv.put(Alarm.Columns.HOUR, alarm.getHour());
-        cv.put(Alarm.Columns.MINUTES, alarm.getMinutes());
-        cv.put(Alarm.Columns.TIME, alarm.getTime());
-        cv.put(Alarm.Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
-        cv.put(Alarm.Columns.TITLE, alarm.getTitle());
-        cv.put(Alarm.Columns.MESSAGE, alarm.getMessage());
-        cv.put(Alarm.Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
+        cv.put(Columns.EXTERNAL_ID, alarm.getExternalId());
+        cv.put(Columns.HOUR, alarm.getHour());
+        cv.put(Columns.MINUTES, alarm.getMinutes());
+        cv.put(Columns.TIME, alarm.getTime());
+        cv.put(Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
+        cv.put(Columns.TITLE, alarm.getTitle());
+        cv.put(Columns.MESSAGE, alarm.getMessage());
+        cv.put(Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
 
-        String selection = Alarm.Columns._ID + "=" + rowId;
+        String selection = Columns._ID + "=" + rowId;
 
-        count = db.update(Alarm.TABLE, cv, selection, null);
+        count = db.update(TABLE, cv, selection, null);
 
         return count;
     }
@@ -141,9 +167,9 @@ public class AlarmDAO {
         int count;
         long rowId = alarm.getId();
 
-        String selection = Alarm.Columns._ID + "=" + rowId;
+        String selection = Columns._ID + "=" + rowId;
 
-        count = db.delete(Alarm.TABLE, selection, null);
+        count = db.delete(TABLE, selection, null);
 
         return count;
     }

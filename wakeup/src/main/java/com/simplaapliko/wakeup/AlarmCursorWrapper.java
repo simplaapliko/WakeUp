@@ -38,15 +38,15 @@ public class AlarmCursorWrapper extends CursorWrapper {
             return null;
         }
 
-        long id = getLong(Alarm.Columns.ID_INDEX);
-        long externalId = getLong(Alarm.Columns.EXTERNAL_ID_INDEX);
-        int hour = getInt(Alarm.Columns.HOUR_INDEX);
-        int minutes = getInt(Alarm.Columns.MINUTES_INDEX);
-        long time = getLong(Alarm.Columns.TIME_INDEX);
-        boolean enabled = getInt(Alarm.Columns.ENABLED_INDEX) == 1;
-        String title = getString(Alarm.Columns.TITLE_INDEX);
-        String message = getString(Alarm.Columns.MESSAGE_INDEX);
-        String alarmHandleListener = getString(Alarm.Columns.ALARM_HANDLE_LISTENER_INDEX);
+        long id = getLong(AlarmDAO.Columns.ID_INDEX);
+        long externalId = getLong(AlarmDAO.Columns.EXTERNAL_ID_INDEX);
+        int hour = getInt(AlarmDAO.Columns.HOUR_INDEX);
+        int minutes = getInt(AlarmDAO.Columns.MINUTES_INDEX);
+        long time = getLong(AlarmDAO.Columns.TIME_INDEX);
+        boolean enabled = getInt(AlarmDAO.Columns.ENABLED_INDEX) == 1;
+        String title = getString(AlarmDAO.Columns.TITLE_INDEX);
+        String message = getString(AlarmDAO.Columns.MESSAGE_INDEX);
+        String alarmHandleListener = getString(AlarmDAO.Columns.ALARM_HANDLE_LISTENER_INDEX);
 
         Alarm alarm = new Alarm();
         alarm.setId(id);
