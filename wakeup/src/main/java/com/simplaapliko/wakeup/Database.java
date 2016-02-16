@@ -32,7 +32,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + AlarmDAO.TABLE + " (" +
-                        AlarmDAO.Columns._ID + " INTEGER PRIMARY KEY, " +
+                        AlarmDAO.Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         AlarmDAO.Columns.EXTERNAL_ID + " INTEGER NOT NULL, " +
                         AlarmDAO.Columns.HOUR + " INTEGER NOT NULL, " +
                         AlarmDAO.Columns.MINUTES + " INTEGER NOT NULL, " +
