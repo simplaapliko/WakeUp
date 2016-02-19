@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 
 public class AlarmDAO {
@@ -54,6 +53,8 @@ public class AlarmDAO {
 
     private SQLiteOpenHelper mOpenHelper;
 
+
+    // Constructors
 
     public AlarmDAO(Context context) {
         mOpenHelper = new Database(context);
@@ -101,38 +102,12 @@ public class AlarmDAO {
         return new AlarmCursorWrapper(cursor);
     }
 
-    public Alarm select(long rowId) {
-        SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+    public Alarm selectById(long id) {
+        return select(Columns._ID, id);
+    }
 
-        String[] projection = {
-                Columns._ID,
-                Columns.EXTERNAL_ID,
-                Columns.HOUR,
-                Columns.MINUTES,
-                Columns.TIME,
-                Columns.ENABLED,
-                Columns.TITLE,
-                Columns.MESSAGE,
-                Columns.ALARM_HANDLE_LISTENER
-        };
-
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-
-        qb.setTables(TABLE);
-        qb.appendWhere(Columns._ID);
-        qb.appendWhere("=");
-        qb.appendWhere(Long.toString(rowId));
-
-        Cursor cursor = qb.query(db, projection, null, null,
-                null, null, null);
-
-        AlarmCursorWrapper wrapper = new AlarmCursorWrapper(cursor);
-
-        if (wrapper.moveToFirst()) {
-            return wrapper.getAlarm();
-        } else {
-            throw new SQLException("Failed to select Alarm with id " + rowId);
-        }
+    public Alarm selectByExternalId(long id) {
+        return select(Columns.EXTERNAL_ID, id);
     }
 
     public long insert(Alarm alarm) {
@@ -176,6 +151,20 @@ public class AlarmDAO {
 
 
     // Private API
+
+    private Alarm select(String column, long id) {
+
+        Cursor cursor = select(null, column, new String[]{Long.toString(id)},
+                null, null, null);
+
+        AlarmCursorWrapper wrapper = new AlarmCursorWrapper(cursor);
+
+        if (wrapper.moveToFirst()) {
+            return wrapper.getAlarm();
+        } else {
+            throw new SQLException("Failed to select Alarm with id " + id);
+        }
+    }
 
     private ContentValues toContentValues(Alarm alarm) {
         ContentValues cv = new ContentValues();
