@@ -60,27 +60,43 @@ public class AlarmDAO {
     }
 
 
-    public AlarmCursorWrapper select() {
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+    // Public API
 
-        qb.setTables(TABLE);
+    public AlarmCursorWrapper select(String[] columns, String selection, String[] selectionArgs,
+                                      String groupBy, String having, String orderBy) {
 
-        String[] projection = {
-                Columns._ID,
-                Columns.EXTERNAL_ID,
-                Columns.HOUR,
-                Columns.MINUTES,
-                Columns.TIME,
-                Columns.ENABLED,
-                Columns.TITLE,
-                Columns.MESSAGE,
-                Columns.ALARM_HANDLE_LISTENER
-        };
+        if (columns == null) {
+            columns = new String[]{
+                    Columns._ID,
+                    Columns.EXTERNAL_ID,
+                    Columns.HOUR,
+                    Columns.MINUTES,
+                    Columns.TIME,
+                    Columns.ENABLED,
+                    Columns.TITLE,
+                    Columns.MESSAGE,
+                    Columns.ALARM_HANDLE_LISTENER
+            };
+        }
 
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
-        Cursor cursor = qb.query(db, projection, null, null,
-                null, null, null);
+        Cursor cursor = db.query(TABLE, columns, selection, selectionArgs,
+                groupBy, having, orderBy);
+
+        return new AlarmCursorWrapper(cursor);
+    }
+
+    public AlarmCursorWrapper select(String selection, String[] selectionArgs) {
+
+        Cursor cursor = select(null, selection, selectionArgs, null, null, Columns.TIME);
+
+        return new AlarmCursorWrapper(cursor);
+    }
+
+    public AlarmCursorWrapper select() {
+
+        Cursor cursor = select(null, null, null, null, null, Columns.TIME);
 
         return new AlarmCursorWrapper(cursor);
     }
