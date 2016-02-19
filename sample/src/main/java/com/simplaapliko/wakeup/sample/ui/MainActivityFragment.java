@@ -253,7 +253,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 
                 long id = info.id;
-                Alarm alarm = new AlarmDAO(getContext()).select(id);
+                Alarm alarm = new AlarmDAO(getContext()).selectById(id);
 
                 new AlarmController().cancelAlarm(getContext(), alarm);
 
@@ -284,7 +284,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         alarm.setTime(calendar.getTimeInMillis());
         alarm.setEnabled(true);
         alarm.setTitle("Title");
-        alarm.setMessage("Notification message, id: " + mId + ", externalId: " + mId);
+        alarm.setMessage("Notification message, externalId: " + mId);
         alarm.setAlarmHandleListener(SendNotification.class.getCanonicalName());
 
         new AlarmController().setAlarm(getContext(), alarm);

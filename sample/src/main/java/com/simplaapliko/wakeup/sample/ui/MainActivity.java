@@ -16,21 +16,48 @@
 
 package com.simplaapliko.wakeup.sample.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.simplaapliko.wakeup.Alarm;
 import com.simplaapliko.wakeup.sample.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
+    public static final String ALARM_ID_KEY = "com.simplaapliko.wakeup.sample.ui.ALARM_ID_KEY";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        long alarmId = intent.getLongExtra(ALARM_ID_KEY, Alarm.NOT_SET);
+        if (alarmId != Alarm.NOT_SET) {
+            Toast.makeText(this, "onCreate: external id received: " + alarmId, Toast.LENGTH_SHORT).show();
+            intent.putExtra(ALARM_ID_KEY, Alarm.NOT_SET);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.d(TAG, "onNewIntent");
+        super.onNewIntent(intent);
+
+        long alarmId = intent.getLongExtra(ALARM_ID_KEY, Alarm.NOT_SET);
+        if (alarmId != Alarm.NOT_SET) {
+            Toast.makeText(this, "onNewIntent: external id received: " + alarmId, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

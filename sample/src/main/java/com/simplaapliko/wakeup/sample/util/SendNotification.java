@@ -36,7 +36,8 @@ public class SendNotification extends AlarmHandleListener {
         Alarm alarm = intent.getParcelableExtra(AlarmController.ALARM_EXTRA);
         int smallIcon = R.mipmap.ic_launcher;
 
-        int id = (int) alarm.getExternalId();
+        int notificationId = (int) alarm.getId();
+        long externalId = alarm.getExternalId();
         String title = alarm.getTitle();
         String text = alarm.getMessage();
         long when = alarm.getTime();
@@ -45,8 +46,10 @@ public class SendNotification extends AlarmHandleListener {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 
             Intent receiver = new Intent(context, MainActivity.class);
+            receiver.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            receiver.putExtra(MainActivity.ALARM_ID_KEY, externalId);
 
-            PendingIntent pi = PendingIntent.getActivity(context, 0, receiver, 0);
+            PendingIntent pi = PendingIntent.getActivity(context, notificationId, receiver, 0);
 
             notification = new Notification.Builder(context)
                     .setContentTitle(title)
@@ -61,20 +64,19 @@ public class SendNotification extends AlarmHandleListener {
             }
 
             notification.flags |= Notification.FLAG_SHOW_LIGHTS;
-            notification.defaults |= Notification.DEFAULT_LIGHTS;
+            //notification.defaults |= Notification.DEFAULT_LIGHTS;
             notification.defaults |= Notification.DEFAULT_SOUND;
             notification.defaults |= Notification.DEFAULT_VIBRATE;
-            notification.defaults |= Notification.DEFAULT_LIGHTS;
-            notification.ledARGB = 0xffffd700;
-            notification.ledOnMS = 300;
-            notification.ledOffMS = 1000;
+            notification.ledARGB = 0xFFFF0000;
+            notification.ledOnMS = 1000;
+            notification.ledOffMS = 4000;
         } else {
             //TODO
             throw new IllegalStateException("sample app currently doesn't support api < 16");
         }
 
         NotificationManager nm = getNotificationManager(context);
-        nm.notify(id, notification);
+        nm.notify(notificationId, notification);
     }
 
     private NotificationManager getNotificationManager(Context context) {
