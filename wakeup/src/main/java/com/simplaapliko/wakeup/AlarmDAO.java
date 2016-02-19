@@ -122,15 +122,7 @@ public class AlarmDAO {
     public long insert(Alarm alarm) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 
-        ContentValues cv = new ContentValues();
-        cv.put(Columns.EXTERNAL_ID, alarm.getExternalId());
-        cv.put(Columns.HOUR, alarm.getHour());
-        cv.put(Columns.MINUTES, alarm.getMinutes());
-        cv.put(Columns.TIME, alarm.getTime());
-        cv.put(Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
-        cv.put(Columns.TITLE, alarm.getTitle());
-        cv.put(Columns.MESSAGE, alarm.getMessage());
-        cv.put(Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
+        ContentValues cv = toContentValues(alarm);
 
         long rowId = db.insert(TABLE, null, cv);
         if (rowId < 0) {
@@ -145,15 +137,7 @@ public class AlarmDAO {
         int count;
         long rowId = alarm.getId();
 
-        ContentValues cv = new ContentValues();
-        cv.put(Columns.EXTERNAL_ID, alarm.getExternalId());
-        cv.put(Columns.HOUR, alarm.getHour());
-        cv.put(Columns.MINUTES, alarm.getMinutes());
-        cv.put(Columns.TIME, alarm.getTime());
-        cv.put(Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
-        cv.put(Columns.TITLE, alarm.getTitle());
-        cv.put(Columns.MESSAGE, alarm.getMessage());
-        cv.put(Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
+        ContentValues cv = toContentValues(alarm);
 
         String selection = Columns._ID + "=" + rowId;
 
@@ -172,6 +156,23 @@ public class AlarmDAO {
         count = db.delete(TABLE, selection, null);
 
         return count;
+    }
+
+
+    // Private API
+
+    private ContentValues toContentValues(Alarm alarm) {
+        ContentValues cv = new ContentValues();
+        cv.put(Columns.EXTERNAL_ID, alarm.getExternalId());
+        cv.put(Columns.HOUR, alarm.getHour());
+        cv.put(Columns.MINUTES, alarm.getMinutes());
+        cv.put(Columns.TIME, alarm.getTime());
+        cv.put(Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
+        cv.put(Columns.TITLE, alarm.getTitle());
+        cv.put(Columns.MESSAGE, alarm.getMessage());
+        cv.put(Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
+
+        return cv;
     }
 
 }
