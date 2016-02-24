@@ -25,8 +25,6 @@ public abstract class AlarmHandleListener {
         // must have public default constructor
     }
 
-    public void onHandle(Context context, Intent intent) {
-        // must be overridden
-    }
+    public abstract void onHandle(Context context, Intent intent);
 
 }
