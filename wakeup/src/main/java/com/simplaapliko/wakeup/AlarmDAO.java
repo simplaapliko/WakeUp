@@ -157,10 +157,7 @@ public class AlarmDAO {
 
     private Alarm select(String column, long id) {
 
-        Cursor cursor = select(null, column + "=?", new String[]{Long.toString(id)},
-                null, null, null);
-
-        AlarmCursorWrapper wrapper = new AlarmCursorWrapper(cursor);
+        AlarmCursorWrapper wrapper = select(column + "=?", new String[]{String.valueOf(id)});
 
         if (wrapper.moveToFirst()) {
             return wrapper.getAlarm();
