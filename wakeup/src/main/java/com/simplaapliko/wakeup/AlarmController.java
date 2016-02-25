@@ -26,7 +26,7 @@ public class AlarmController {
 
     public static final String ALARM_ALERT_ACTION = "com.simplaapliko.wakeup.ALARM_ALERT_ACTION";
 
-    public static final String ALARM_EXTRA = "com.simplaapliko.wakeup.ALARM_EXTRA";
+    public static final String EXTRA_ALARM = "com.simplaapliko.wakeup.EXTRA_ALARM";
 
     private static final String TAG = "AlarmController";
 
@@ -65,7 +65,7 @@ public class AlarmController {
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.setAction(ALARM_ALERT_ACTION);
-        intent.putExtra(ALARM_EXTRA, alarm);
+        intent.putExtra(EXTRA_ALARM, alarm);
 
         int alarmId = (int) alarm.getId();
         long triggerAt = alarm.getTime();

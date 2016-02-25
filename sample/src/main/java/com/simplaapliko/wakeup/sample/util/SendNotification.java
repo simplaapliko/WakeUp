@@ -34,7 +34,7 @@ public class SendNotification extends AlarmHandleListener {
     @Override
     public void onHandle(Context context, Intent intent) {
 
-        Alarm alarm = intent.getParcelableExtra(AlarmController.ALARM_EXTRA);
+        Alarm alarm = intent.getParcelableExtra(AlarmController.EXTRA_ALARM);
         int smallIcon = R.mipmap.ic_launcher;
 
         int notificationId = (int) alarm.getId();

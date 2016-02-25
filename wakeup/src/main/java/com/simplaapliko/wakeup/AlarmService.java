@@ -33,7 +33,7 @@ public class AlarmService extends IntentService {
         Log.d(TAG, "onHandleIntent");
 
         // get alarm from extras
-        Alarm alarm = intent.getParcelableExtra(AlarmController.ALARM_EXTRA);
+        Alarm alarm = intent.getParcelableExtra(AlarmController.EXTRA_ALARM);
 
         // delete alarm from the database
         new AlarmDAO(this).delete(alarm);
