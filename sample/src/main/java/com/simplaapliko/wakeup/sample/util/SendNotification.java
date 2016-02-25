@@ -21,6 +21,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import com.simplaapliko.wakeup.Alarm;
 import com.simplaapliko.wakeup.AlarmController;
@@ -51,25 +52,26 @@ public class SendNotification extends AlarmHandleListener {
 
             PendingIntent pi = PendingIntent.getActivity(context, notificationId, receiver, 0);
 
-            notification = new Notification.Builder(context)
+            Notification.Builder builder = new Notification.Builder(context)
                     .setContentTitle(title)
                     .setContentText(text)
                     .setAutoCancel(true)
                     .setSmallIcon(smallIcon)
-                    .setContentIntent(pi)
-                    .build();
+                    .setContentIntent(pi);
 
             if (when != Alarm.NOT_SET) {
-                notification.when = when;
+                builder.setWhen(when);
             }
 
-            notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+            builder.setLights(0xFFFF0000, 1000, 4000);
+            builder.setSound(Uri.parse("content://media/internal/audio/media/33"));
+            builder.setVibrate(new long[]{1000, 500, 500, 500});
+
+            notification = builder.build();
+            //notification.flags |= Notification.FLAG_SHOW_LIGHTS;
             //notification.defaults |= Notification.DEFAULT_LIGHTS;
-            notification.defaults |= Notification.DEFAULT_SOUND;
-            notification.defaults |= Notification.DEFAULT_VIBRATE;
-            notification.ledARGB = 0xFFFF0000;
-            notification.ledOnMS = 1000;
-            notification.ledOffMS = 4000;
+            //notification.defaults |= Notification.DEFAULT_SOUND;
+            //notification.defaults |= Notification.DEFAULT_VIBRATE;
         } else {
             //TODO
             throw new IllegalStateException("sample app currently doesn't support api < 16");
