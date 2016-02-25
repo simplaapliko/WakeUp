@@ -137,16 +137,19 @@ public class AlarmDAO {
         return count;
     }
 
-    public int delete(Alarm alarm) {
+    public int delete(long id) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count;
-        long rowId = alarm.getId();
 
-        String selection = Columns._ID + "=" + rowId;
+        String selection = Columns._ID + "=" + id;
 
         count = db.delete(TABLE, selection, null);
 
         return count;
+    }
+
+    public int delete(Alarm alarm) {
+        return delete(alarm.getId());
     }
 
 
