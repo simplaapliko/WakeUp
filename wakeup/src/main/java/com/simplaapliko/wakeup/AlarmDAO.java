@@ -64,7 +64,7 @@ public class AlarmDAO {
     // Public API
 
     public AlarmCursorWrapper select(String[] columns, String selection, String[] selectionArgs,
-                                      String groupBy, String having, String orderBy) {
+                                     String groupBy, String having, String orderBy) {
 
         if (columns == null) {
             columns = new String[]{
@@ -102,12 +102,23 @@ public class AlarmDAO {
         return new AlarmCursorWrapper(cursor);
     }
 
+    public Alarm select(String column, String value) {
+
+        AlarmCursorWrapper wrapper = select(column + "=?", new String[]{value});
+
+        if (wrapper.moveToFirst()) {
+            return wrapper.getAlarm();
+        } else {
+            throw new SQLException("Failed to select Alarm with id " + value);
+        }
+    }
+
     public Alarm selectById(long id) {
-        return select(Columns._ID, id);
+        return select(Columns._ID, String.valueOf(id));
     }
 
     public Alarm selectByExternalId(long id) {
-        return select(Columns.EXTERNAL_ID, id);
+        return select(Columns.EXTERNAL_ID, String.valueOf(id));
     }
 
     public long insert(Alarm alarm) {
@@ -154,17 +165,6 @@ public class AlarmDAO {
 
 
     // Private API
-
-    private Alarm select(String column, long id) {
-
-        AlarmCursorWrapper wrapper = select(column + "=?", new String[]{String.valueOf(id)});
-
-        if (wrapper.moveToFirst()) {
-            return wrapper.getAlarm();
-        } else {
-            throw new SQLException("Failed to select Alarm with id " + id);
-        }
-    }
 
     private ContentValues toContentValues(Alarm alarm) {
         ContentValues cv = new ContentValues();
