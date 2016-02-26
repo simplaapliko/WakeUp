@@ -41,13 +41,14 @@ public class BootReceiver extends BroadcastReceiver {
             if (wrapper.moveToFirst()) {
 
                 AlarmController alarmController = new AlarmController();
+                AlarmDAO alarmDao = new AlarmDAO(context);
                 long currentTime = System.currentTimeMillis();
                 do {
                     Alarm alarm = wrapper.getAlarm();
                     if (alarm.getTime() > currentTime) {
                         alarmController.enableAlarm(context, alarm);
                     } else {
-                        new AlarmDAO(context).delete(alarm);
+                        alarmDao.delete(alarm);
                     }
                 } while (wrapper.moveToNext());
             }
