@@ -158,7 +158,7 @@ public class AlarmDAO {
     }
 
     public int delete(String column, String value) {
-        return delete(column + "=", new String[]{value});
+        return delete(column + "=?", new String[]{value});
     }
 
     /**
@@ -167,7 +167,7 @@ public class AlarmDAO {
      * @return the number of rows affected
      */
     public int delete(long id) {
-        return delete(Columns._ID + "=", new String[]{String.valueOf(id)});
+        return delete(Columns._ID + "=?", new String[]{String.valueOf(id)});
     }
 
     public int delete(Alarm alarm) {
