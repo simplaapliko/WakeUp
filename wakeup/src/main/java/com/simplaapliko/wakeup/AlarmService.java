@@ -45,7 +45,7 @@ public class AlarmService extends IntentService {
         if (listener != null) {
             listener.onHandle(this, intent);
         } else {
-            Log.d(TAG, "not able to call to onHandle, OnAlarmHandleListener is null");
+            Log.i(TAG, "not able to get new instance for class " + alarm.getAlarmHandleListener());
         }
 
         // Finish the execution from a previous startWakefulService(Context, Intent).
