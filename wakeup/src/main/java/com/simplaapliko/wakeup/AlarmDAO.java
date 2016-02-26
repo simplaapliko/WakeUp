@@ -148,15 +148,26 @@ public class AlarmDAO {
         return count;
     }
 
-    public int delete(long id) {
+    public int delete(String whereClause, String[] whereArgs) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count;
 
-        String selection = Columns._ID + "=" + id;
-
-        count = db.delete(TABLE, selection, null);
+        count = db.delete(TABLE, whereClause, whereArgs);
 
         return count;
+    }
+
+    public int delete(String column, String value) {
+        return delete(column + "=", new String[]{value});
+    }
+
+    /**
+     *
+     * @param id the alarm id to be deleted
+     * @return the number of rows affected
+     */
+    public int delete(long id) {
+        return delete(Columns._ID + "=", new String[]{String.valueOf(id)});
     }
 
     public int delete(Alarm alarm) {
