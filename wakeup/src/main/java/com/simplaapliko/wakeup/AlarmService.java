@@ -35,6 +35,11 @@ public class AlarmService extends IntentService {
         // get alarm from extras
         Alarm alarm = intent.getParcelableExtra(AlarmController.EXTRA_ALARM);
 
+        if (alarm == null) {
+            Log.e(TAG, "alarm extra is null");
+            return;
+        }
+
         // delete alarm from the database
         new AlarmDAO(this).delete(alarm);
 
