@@ -20,6 +20,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 public class AlarmController {
@@ -89,7 +90,11 @@ public class AlarmController {
                 context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAt, sender);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, sender);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAt, sender);
+        }
     }
 
     public void disableAlarm(Context context, Alarm alarm) {
