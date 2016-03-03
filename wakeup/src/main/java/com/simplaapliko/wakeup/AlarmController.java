@@ -68,12 +68,10 @@ public class AlarmController {
     public void cancelAlarm(Context context, long externalId) {
         Log.d(TAG, "cancelAlarm");
 
-        int count = new AlarmDAO(context)
-                .delete(AlarmDAO.Columns.EXTERNAL_ID, String.valueOf(externalId));
+        Alarm alarm = new AlarmDAO(context)
+                .selectByExternalId(externalId);
 
-        if (count > 0) {
-            disableAlarm(context, externalId);
-        }
+        cancelAlarm(context, alarm);
     }
 
     public void enableAlarm(Context context, Alarm alarm) {
@@ -114,14 +112,4 @@ public class AlarmController {
         alarmManager.cancel(sender);
     }
 
-    /**
-     * @param context The context to use.
-     * @param externalId External id to be disabled
-     */
-    public void disableAlarm(Context context, long externalId) {
-        Alarm alarm = new AlarmDAO(context)
-                .select(AlarmDAO.Columns.EXTERNAL_ID, String.valueOf(externalId));
-
-        disableAlarm(context, alarm);
-    }
 }
