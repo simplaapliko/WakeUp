@@ -45,7 +45,7 @@ public class BootReceiver extends BroadcastReceiver {
                 long currentTime = System.currentTimeMillis();
                 do {
                     Alarm alarm = wrapper.getAlarm();
-                    if (alarm.getTime() > currentTime) {
+                    if (alarm.isKeepAfterReboot() || alarm.getTime() > currentTime) {
                         alarmController.enableAlarm(context, alarm);
                     } else {
                         alarmDao.delete(alarm);

@@ -37,6 +37,7 @@ public class AlarmDAO {
         public static final String ENABLED = "enabled";
         public static final String TITLE = "title";
         public static final String MESSAGE = "message";
+        public static final String KEEP_AFTER_REBOOT = "keep_after_reboot";
         public static final String ALARM_HANDLE_LISTENER = "alarm_handle_listener";
 
         public static final int ID_INDEX = 0;
@@ -47,7 +48,8 @@ public class AlarmDAO {
         public static final int ENABLED_INDEX = 5;
         public static final int TITLE_INDEX = 6;
         public static final int MESSAGE_INDEX = 7;
-        public static final int ALARM_HANDLE_LISTENER_INDEX = 8;
+        public static final int KEEP_AFTER_REBOOT_INDEX = 8;
+        public static final int ALARM_HANDLE_LISTENER_INDEX = 9;
     }
 
 
@@ -76,6 +78,7 @@ public class AlarmDAO {
                     Columns.ENABLED,
                     Columns.TITLE,
                     Columns.MESSAGE,
+                    Columns.KEEP_AFTER_REBOOT,
                     Columns.ALARM_HANDLE_LISTENER
             };
         }
@@ -186,6 +189,7 @@ public class AlarmDAO {
         cv.put(Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
         cv.put(Columns.TITLE, alarm.getTitle());
         cv.put(Columns.MESSAGE, alarm.getMessage());
+        cv.put(Columns.KEEP_AFTER_REBOOT, alarm.isKeepAfterReboot() ? 1 : 0);
         cv.put(Columns.ALARM_HANDLE_LISTENER, alarm.getAlarmHandleListener());
 
         return cv;

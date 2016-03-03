@@ -46,6 +46,7 @@ public class AlarmCursorWrapper extends CursorWrapper {
         boolean enabled = getInt(AlarmDAO.Columns.ENABLED_INDEX) == 1;
         String title = getString(AlarmDAO.Columns.TITLE_INDEX);
         String message = getString(AlarmDAO.Columns.MESSAGE_INDEX);
+        boolean keepAfterReboot = getInt(AlarmDAO.Columns.KEEP_AFTER_REBOOT_INDEX) == 1;
         String alarmHandleListener = getString(AlarmDAO.Columns.ALARM_HANDLE_LISTENER_INDEX);
 
         Alarm alarm = new Alarm();
@@ -57,6 +58,7 @@ public class AlarmCursorWrapper extends CursorWrapper {
         alarm.setEnabled(enabled);
         alarm.setTitle(title);
         alarm.setMessage(message);
+        alarm.setKeepAfterReboot(keepAfterReboot);
         alarm.setAlarmHandleListener(alarmHandleListener);
 
         return alarm;
