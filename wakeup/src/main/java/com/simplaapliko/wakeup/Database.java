@@ -40,7 +40,7 @@ public class Database extends SQLiteOpenHelper {
                         AlarmDAO.Columns.ENABLED + " INTEGER NOT NULL, " +
                         AlarmDAO.Columns.TITLE + " TEXT, " +
                         AlarmDAO.Columns.MESSAGE + " TEXT, " +
-                        AlarmDAO.Columns.KEEP_AFTER_REBOOT + " INTEGER NOT NULL, " +
+                        AlarmDAO.Columns.KEEP_ON_INIT + " INTEGER NOT NULL, " +
                         AlarmDAO.Columns.ALARM_HANDLE_LISTENER + " TEXT);"
         );
     }
