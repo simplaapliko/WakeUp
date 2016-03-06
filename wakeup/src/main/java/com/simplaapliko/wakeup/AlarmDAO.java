@@ -21,7 +21,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 public class AlarmDAO {
@@ -53,13 +52,13 @@ public class AlarmDAO {
     }
 
 
-    private SQLiteOpenHelper mOpenHelper;
+    private Context mContext;
 
 
     // Constructors
 
     public AlarmDAO(Context context) {
-        mOpenHelper = new Database(context);
+        mContext = context;
     }
 
 
@@ -83,7 +82,7 @@ public class AlarmDAO {
             };
         }
 
-        SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = Database.Manager.getInstance(mContext).getReadableDatabase();
 
         Cursor cursor = db.query(TABLE, columns, selection, selectionArgs,
                 groupBy, having, orderBy);
@@ -125,7 +124,7 @@ public class AlarmDAO {
     }
 
     public long insert(Alarm alarm) {
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        SQLiteDatabase db = Database.Manager.getInstance(mContext).getWritableDatabase();
 
         ContentValues cv = toContentValues(alarm);
 
@@ -139,7 +138,7 @@ public class AlarmDAO {
     }
 
     public int update(Alarm alarm) {
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        SQLiteDatabase db = Database.Manager.getInstance(mContext).getWritableDatabase();
         int count;
         long rowId = alarm.getId();
 
@@ -154,7 +153,7 @@ public class AlarmDAO {
     }
 
     public int delete(String whereClause, String[] whereArgs) {
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        SQLiteDatabase db = Database.Manager.getInstance(mContext).getWritableDatabase();
         int count;
 
         count = db.delete(TABLE, whereClause, whereArgs);

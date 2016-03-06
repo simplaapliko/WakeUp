@@ -22,20 +22,64 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database extends SQLiteOpenHelper {
 
+    // Inner classes
+
+    public static class Manager {
+
+        private static Manager sManager;
+
+        private Database mDatabase;
+
+
+        // Constructors
+
+        public static synchronized Manager getInstance(Context context){
+            if (sManager == null) {
+                sManager = new Manager(context);
+            }
+            return sManager;
+        }
+
+        private Manager(Context context) {
+            mDatabase = new Database(context);
+        }
+
+
+        // Public API
+
+        public SQLiteDatabase getWritableDatabase() {
+            return mDatabase.getWritableDatabase();
+        }
+
+        public SQLiteDatabase getReadableDatabase() {
+            return mDatabase.getReadableDatabase();
+        }
+
+        public void close() {
+            mDatabase.close();
+        }
+    }
+
     private static final String DATABASE_NAME = "com.simplaapliko.wakeup.db";
     private static final int DATABASE_VERSION = 1;
+
+
+    // Constructors
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
+
+    // Public API
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + AlarmDAO.TABLE + " (" +
                         AlarmDAO.Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         AlarmDAO.Columns.EXTERNAL_ID + " INTEGER NOT NULL, " +
-                        AlarmDAO.Columns.HOUR + " INTEGER NOT NULL, " +
-                        AlarmDAO.Columns.MINUTES + " INTEGER NOT NULL, " +
+                        AlarmDAO.Columns.IS_EXACT + " INTEGER NOT NULL, " +
+                        AlarmDAO.Columns.TYPE + " INTEGER NOT NULL, " +
                         AlarmDAO.Columns.TIME + " INTEGER, " +
                         AlarmDAO.Columns.ENABLED + " INTEGER NOT NULL, " +
                         AlarmDAO.Columns.TITLE + " TEXT, " +
