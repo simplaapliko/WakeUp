@@ -22,6 +22,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 
 import com.simplaapliko.wakeup.Alarm;
 import com.simplaapliko.wakeup.AlarmController;
@@ -44,38 +45,33 @@ public class SendNotification extends AlarmHandleListener {
         long when = alarm.getTime();
 
         Notification notification;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 
-            Intent receiver = new Intent(context, MainActivity.class);
-            receiver.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            receiver.putExtra(MainActivity.ALARM_ID_KEY, externalId);
+        Intent receiver = new Intent(context, MainActivity.class);
+        receiver.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        receiver.putExtra(MainActivity.ALARM_ID_KEY, externalId);
 
-            PendingIntent pi = PendingIntent.getActivity(context, notificationId, receiver, 0);
+        PendingIntent pi = PendingIntent.getActivity(context, notificationId, receiver, 0);
 
-            Notification.Builder builder = new Notification.Builder(context)
-                    .setContentTitle(title)
-                    .setContentText(text)
-                    .setAutoCancel(true)
-                    .setSmallIcon(smallIcon)
-                    .setContentIntent(pi);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setAutoCancel(true)
+                .setSmallIcon(smallIcon)
+                .setContentIntent(pi);
 
-            if (when != Alarm.NOT_SET) {
-                builder.setWhen(when);
-            }
-
-            builder.setLights(0xFFFF0000, 1000, 4000);
-            builder.setSound(Uri.parse("content://media/internal/audio/media/33"));
-            builder.setVibrate(new long[]{1000, 500, 500, 500});
-
-            notification = builder.build();
-            //notification.flags |= Notification.FLAG_SHOW_LIGHTS;
-            //notification.defaults |= Notification.DEFAULT_LIGHTS;
-            //notification.defaults |= Notification.DEFAULT_SOUND;
-            //notification.defaults |= Notification.DEFAULT_VIBRATE;
-        } else {
-            //TODO
-            throw new IllegalStateException("sample app currently doesn't support api < 16");
+        if (when != Alarm.NOT_SET) {
+            builder.setWhen(when);
         }
+
+        builder.setLights(0xFFFF0000, 1000, 4000);
+        builder.setSound(Uri.parse("content://media/internal/audio/media/33"));
+        builder.setVibrate(new long[]{1000, 500, 500, 500});
+
+        notification = builder.build();
+        //notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+        //notification.defaults |= Notification.DEFAULT_LIGHTS;
+        //notification.defaults |= Notification.DEFAULT_SOUND;
+        //notification.defaults |= Notification.DEFAULT_VIBRATE;
 
         NotificationManager nm = getNotificationManager(context);
         nm.notify(notificationId, notification);
