@@ -26,9 +26,9 @@ import android.util.Log;
  * rebooted. This receiver is set to be disabled (android:enabled="false") in the
  * application's manifest file.
  */
-public class AlarmInitReceiver extends BroadcastReceiver {
+public class BootReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "AlarmInitReceiver";
+    private static final String TAG = "BootReceiver";
 
 
     @Override
@@ -45,7 +45,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
                 long currentTime = System.currentTimeMillis();
                 do {
                     Alarm alarm = wrapper.getAlarm();
-                    if (alarm.isKeepOnInit() || alarm.getTime() > currentTime) {
+                    if (alarm.isKeepAfterReboot() || alarm.getTime() > currentTime) {
                         alarmController.enableAlarm(context, alarm);
                     } else {
                         alarmDao.delete(alarm);

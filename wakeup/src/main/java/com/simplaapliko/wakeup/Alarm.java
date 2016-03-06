@@ -31,7 +31,7 @@ public class Alarm implements Parcelable {
     private boolean mEnabled;
     private String mTitle;
     private String mMessage;
-    private boolean mKeepOnInit;
+    private boolean mKeepAfterReboot;
     private String mAlarmHandleListener;
 
     public Alarm() {
@@ -101,12 +101,12 @@ public class Alarm implements Parcelable {
         mMessage = message;
     }
 
-    public boolean isKeepOnInit() {
-        return mKeepOnInit;
+    public boolean isKeepAfterReboot() {
+        return mKeepAfterReboot;
     }
 
-    public void setKeepOnInit(boolean keepOnInit) {
-        mKeepOnInit = keepOnInit;
+    public void setKeepAfterReboot(boolean keepAfterReboot) {
+        mKeepAfterReboot = keepAfterReboot;
     }
 
     public String getAlarmHandleListener() {
@@ -128,7 +128,7 @@ public class Alarm implements Parcelable {
                 ", mEnabled=" + mEnabled +
                 ", mTitle='" + mTitle + '\'' +
                 ", mMessage='" + mMessage + '\'' +
-                ", mKeepOnInit=" + mKeepOnInit +
+                ", mKeepAfterReboot=" + mKeepAfterReboot +
                 ", mAlarmHandleListener='" + mAlarmHandleListener + '\'' +
                 '}';
     }
@@ -145,7 +145,7 @@ public class Alarm implements Parcelable {
         mEnabled = in.readInt() == 1;
         mTitle = in.readString();
         mMessage = in.readString();
-        mKeepOnInit = in.readInt() == 1;
+        mKeepAfterReboot = in.readInt() == 1;
         mAlarmHandleListener = in.readString();
     }
 
@@ -159,7 +159,7 @@ public class Alarm implements Parcelable {
         dest.writeInt(mEnabled ? 1 : 0);
         dest.writeString(mTitle);
         dest.writeString(mMessage);
-        dest.writeInt(mKeepOnInit ? 1 : 0);
+        dest.writeInt(mKeepAfterReboot ? 1 : 0);
         dest.writeString(mAlarmHandleListener);
     }
 
