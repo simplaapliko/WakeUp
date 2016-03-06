@@ -16,17 +16,38 @@
 
 package com.simplaapliko.wakeup;
 
+import android.app.AlarmManager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Alarm implements Parcelable {
 
+    /**
+     * A reference to {@link android.app.AlarmManager#RTC_WAKEUP}
+     */
+    public static final int RTC_WAKEUP = AlarmManager.RTC_WAKEUP;
+
+    /**
+     * A reference to {@link android.app.AlarmManager#RTC}
+     */
+    public static final int RTC = AlarmManager.RTC;
+
+    /**
+     * A reference to {@link android.app.AlarmManager#ELAPSED_REALTIME_WAKEUP}
+     */
+    public static final int ELAPSED_REALTIME_WAKEUP = AlarmManager.ELAPSED_REALTIME_WAKEUP;
+
+    /**
+     * A reference to {@link android.app.AlarmManager#ELAPSED_REALTIME}
+     */
+    public static final int ELAPSED_REALTIME = AlarmManager.ELAPSED_REALTIME;
+
     public static final int NOT_SET = -1;
 
     private long mId;
     private long mExternalId;
-    private int mHour;
-    private int mMinutes;
+    private boolean mExact;
+    private int mType;
     private long mTime;
     private boolean mEnabled;
     private String mTitle;
@@ -53,20 +74,20 @@ public class Alarm implements Parcelable {
         mExternalId = externalId;
     }
 
-    public int getHour() {
-        return mHour;
+    public boolean isExact() {
+        return mExact;
     }
 
-    public void setHour(int hour) {
-        mHour = hour;
+    public void setExact(boolean exact) {
+        mExact = exact;
     }
 
-    public int getMinutes() {
-        return mMinutes;
+    public int getType() {
+        return mType;
     }
 
-    public void setMinutes(int minutes) {
-        mMinutes = minutes;
+    public void setType(int type) {
+        mType = type;
     }
 
     public long getTime() {
@@ -122,8 +143,8 @@ public class Alarm implements Parcelable {
         return "Alarm{" +
                 "mId=" + mId +
                 ", mExternalId=" + mExternalId +
-                ", mHour=" + mHour +
-                ", mMinutes=" + mMinutes +
+                ", mExact=" + mExact +
+                ", mType=" + mType +
                 ", mTime=" + mTime +
                 ", mEnabled=" + mEnabled +
                 ", mTitle='" + mTitle + '\'' +
@@ -134,13 +155,13 @@ public class Alarm implements Parcelable {
     }
 
 
-    // Parcelable
+// Parcelable
 
     protected Alarm(Parcel in) {
         mId = in.readLong();
         mExternalId = in.readLong();
-        mHour = in.readInt();
-        mMinutes = in.readInt();
+        mExact = in.readInt() == 1;
+        mType = in.readInt();
         mTime = in.readLong();
         mEnabled = in.readInt() == 1;
         mTitle = in.readString();
@@ -153,8 +174,8 @@ public class Alarm implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mId);
         dest.writeLong(mExternalId);
-        dest.writeInt(mHour);
-        dest.writeInt(mMinutes);
+        dest.writeInt(mExact ? 1 : 0);
+        dest.writeInt(mType);
         dest.writeLong(mTime);
         dest.writeInt(mEnabled ? 1 : 0);
         dest.writeString(mTitle);
