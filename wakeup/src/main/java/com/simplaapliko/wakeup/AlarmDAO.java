@@ -30,8 +30,8 @@ public class AlarmDAO {
     public static class Columns implements BaseColumns {
 
         public static final String EXTERNAL_ID = "external_id";
-        public static final String HOUR = "hour";
-        public static final String MINUTES = "minutes";
+        public static final String IS_EXACT = "is_exact";
+        public static final String TYPE = "type";
         public static final String TIME = "time";
         public static final String ENABLED = "enabled";
         public static final String TITLE = "title";
@@ -41,8 +41,8 @@ public class AlarmDAO {
 
         public static final int ID_INDEX = 0;
         public static final int EXTERNAL_ID_INDEX = 1;
-        public static final int HOUR_INDEX = 2;
-        public static final int MINUTES_INDEX = 3;
+        public static final int IS_EXACT_INDEX = 2;
+        public static final int TYPE_INDEX = 3;
         public static final int TIME_INDEX = 4;
         public static final int ENABLED_INDEX = 5;
         public static final int TITLE_INDEX = 6;
@@ -71,8 +71,8 @@ public class AlarmDAO {
             columns = new String[]{
                     Columns._ID,
                     Columns.EXTERNAL_ID,
-                    Columns.HOUR,
-                    Columns.MINUTES,
+                    Columns.IS_EXACT,
+                    Columns.TYPE,
                     Columns.TIME,
                     Columns.ENABLED,
                     Columns.TITLE,
@@ -185,8 +185,8 @@ public class AlarmDAO {
     private ContentValues toContentValues(Alarm alarm) {
         ContentValues cv = new ContentValues();
         cv.put(Columns.EXTERNAL_ID, alarm.getExternalId());
-        cv.put(Columns.HOUR, alarm.getHour());
-        cv.put(Columns.MINUTES, alarm.getMinutes());
+        cv.put(Columns.IS_EXACT, alarm.isExact());
+        cv.put(Columns.TYPE, alarm.getType());
         cv.put(Columns.TIME, alarm.getTime());
         cv.put(Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
         cv.put(Columns.TITLE, alarm.getTitle());

@@ -88,10 +88,14 @@ public class AlarmController {
                 context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, sender);
+        if (alarm.isExact()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, sender);
+            } else {
+                alarmManager.set(alarm.getType(), triggerAt, sender);
+            }
         } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAt, sender);
+            alarmManager.set(alarm.getType(), triggerAt, sender);
         }
     }
 

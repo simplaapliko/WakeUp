@@ -40,8 +40,8 @@ public class AlarmCursorWrapper extends CursorWrapper {
 
         long id = getLong(AlarmDAO.Columns.ID_INDEX);
         long externalId = getLong(AlarmDAO.Columns.EXTERNAL_ID_INDEX);
-        int hour = getInt(AlarmDAO.Columns.HOUR_INDEX);
-        int minutes = getInt(AlarmDAO.Columns.MINUTES_INDEX);
+        boolean exact = getInt(AlarmDAO.Columns.IS_EXACT_INDEX) == 1;
+        int type = getInt(AlarmDAO.Columns.TYPE_INDEX);
         long time = getLong(AlarmDAO.Columns.TIME_INDEX);
         boolean enabled = getInt(AlarmDAO.Columns.ENABLED_INDEX) == 1;
         String title = getString(AlarmDAO.Columns.TITLE_INDEX);
@@ -52,8 +52,8 @@ public class AlarmCursorWrapper extends CursorWrapper {
         Alarm alarm = new Alarm();
         alarm.setId(id);
         alarm.setExternalId(externalId);
-        alarm.setHour(hour);
-        alarm.setMinutes(minutes);
+        alarm.setExact(exact);
+        alarm.setType(type);
         alarm.setTime(time);
         alarm.setEnabled(enabled);
         alarm.setTitle(title);

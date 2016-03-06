@@ -279,8 +279,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         Alarm alarm = new Alarm();
         alarm.setExternalId(mId);
-        alarm.setHour(calendar.get(Calendar.HOUR_OF_DAY));
-        alarm.setMinutes(calendar.get(Calendar.MINUTE));
+        alarm.setExact(true);
+        alarm.setType(Alarm.RTC_WAKEUP);
         alarm.setTime(calendar.getTimeInMillis());
         alarm.setEnabled(true);
         alarm.setTitle("Title");
