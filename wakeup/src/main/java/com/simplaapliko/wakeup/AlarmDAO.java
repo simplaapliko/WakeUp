@@ -133,7 +133,6 @@ public class AlarmDAO {
             throw new SQLException("Failed to insert Alarm " + cv);
         }
 
-        db.close();
         return rowId;
     }
 
@@ -148,7 +147,6 @@ public class AlarmDAO {
 
         count = db.update(TABLE, cv, selection, null);
 
-        db.close();
         return count;
     }
 
@@ -158,7 +156,6 @@ public class AlarmDAO {
 
         count = db.delete(TABLE, whereClause, whereArgs);
 
-        db.close();
         return count;
     }
 

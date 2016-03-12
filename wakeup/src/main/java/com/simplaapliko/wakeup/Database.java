@@ -55,9 +55,6 @@ public class Database extends SQLiteOpenHelper {
             return mDatabase.getReadableDatabase();
         }
 
-        public void close() {
-            mDatabase.close();
-        }
     }
 
     private static final String DATABASE_NAME = "com.simplaapliko.wakeup.db";
