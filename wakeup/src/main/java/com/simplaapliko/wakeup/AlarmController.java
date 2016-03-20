@@ -85,7 +85,7 @@ public class AlarmController {
         long triggerAt = alarm.getTime();
 
         PendingIntent sender = PendingIntent.getBroadcast(
-                context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarm.isExact()) {
@@ -108,7 +108,7 @@ public class AlarmController {
         int alarmId = (int) alarm.getId();
 
         PendingIntent sender = PendingIntent.getBroadcast(
-                context, alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         sender.cancel();
 
