@@ -1,4 +1,6 @@
 # WakeUp
+[![Build Status](https://travis-ci.org/simplaapliko/WakeUp.svg)](https://travis-ci.org/simplaapliko/WakeUp)
+
 A library which helps to trigger alarms.
 
 ## Usage
@@ -12,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.simplaapliko:wakeup:0.9.11'
+    compile 'com.simplaapliko:wakeup:0.9.13'
 }
 ```
 
