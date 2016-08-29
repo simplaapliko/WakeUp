@@ -154,8 +154,7 @@ public class Alarm implements Parcelable {
                 '}';
     }
 
-
-// Parcelable
+    // Parcelable
 
     protected Alarm(Parcel in) {
         mId = in.readLong();
