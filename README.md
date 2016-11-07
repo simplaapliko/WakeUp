@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.simplaapliko:wakeup:0.9.15'
+    compile 'com.simplaapliko:wakeup:0.9.16'
 }
 ```
 
