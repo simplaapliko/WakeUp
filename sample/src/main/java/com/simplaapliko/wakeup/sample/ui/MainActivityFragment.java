@@ -48,66 +48,6 @@ import java.util.Date;
 
 public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static class AlarmCursorLoader extends CursorLoader {
-
-        private Cursor mCursor;
-
-
-        // Constructors
-
-        public AlarmCursorLoader(Context context) {
-            super(context);
-
-        }
-
-
-        // Public API
-
-        @Override
-        public Cursor loadInBackground() {
-
-            mCursor = initCursor();
-
-            return mCursor;
-        }
-
-        @Override
-        protected void onStopLoading() {
-            super.onStopLoading();
-            cancelLoad();
-        }
-
-        @Override
-        public void onCanceled(Cursor cursor) {
-            super.onCanceled(cursor);
-
-            if (mCursor != null && !mCursor.isClosed()) {
-                mCursor.close();
-            }
-        }
-
-        @Override
-        protected void onReset() {
-            super.onReset();
-
-            onStopLoading();
-
-            if (mCursor != null && !mCursor.isClosed()) {
-                mCursor.close();
-            }
-
-            mCursor = null;
-        }
-
-
-        // Private API
-
-        private Cursor initCursor() {
-            return new AlarmDAO(getContext()).select();
-        }
-
-    }
-
     private static class AlarmAdapter extends ResourceCursorAdapter {
 
         static class ViewHolder {
@@ -122,7 +62,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
             mLayoutInflater = LayoutInflater.from(context);
         }
-
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
@@ -163,17 +102,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private static final String PREF_EXTERNAL_ID = "external_id";
 
     private ListView mList;
-
     private long mId;
-
-
-    // Constructors
 
     public MainActivityFragment() {
     }
-
-
-    // Public API
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -264,9 +196,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         }
     }
 
-
-    // Private API
-
     private void restartLoader() {
         getLoaderManager().restartLoader(0, null, this);
     }
@@ -299,12 +228,60 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 .getLong(PREF_EXTERNAL_ID, 0);
     }
 
-
     private void saveExternalId(long id) {
         getActivity().getPreferences(Context.MODE_PRIVATE)
                 .edit()
                 .putLong(PREF_EXTERNAL_ID, id)
-                .commit();
+                .apply();
     }
 
+    private static class AlarmCursorLoader extends CursorLoader {
+
+        private Cursor mCursor;
+
+        public AlarmCursorLoader(Context context) {
+            super(context);
+
+        }
+
+        @Override
+        public Cursor loadInBackground() {
+
+            mCursor = initCursor();
+
+            return mCursor;
+        }
+
+        @Override
+        protected void onStopLoading() {
+            super.onStopLoading();
+            cancelLoad();
+        }
+
+        @Override
+        public void onCanceled(Cursor cursor) {
+            super.onCanceled(cursor);
+
+            if (mCursor != null && !mCursor.isClosed()) {
+                mCursor.close();
+            }
+        }
+
+        @Override
+        protected void onReset() {
+            super.onReset();
+
+            onStopLoading();
+
+            if (mCursor != null && !mCursor.isClosed()) {
+                mCursor.close();
+            }
+
+            mCursor = null;
+        }
+
+        private Cursor initCursor() {
+            return new AlarmDAO(getContext()).select();
+        }
+    }
 }

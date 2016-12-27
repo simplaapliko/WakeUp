@@ -30,9 +30,6 @@ public class AlarmCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-
-    // Public API
-
     public Alarm getAlarm() {
         if (isBeforeFirst() || isAfterLast()) {
             return null;
@@ -63,5 +60,4 @@ public class AlarmCursorWrapper extends CursorWrapper {
 
         return alarm;
     }
-
 }

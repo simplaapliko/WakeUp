@@ -51,18 +51,11 @@ public class AlarmDAO {
         public static final int ALARM_HANDLE_LISTENER_INDEX = 9;
     }
 
-
     private Context mContext;
-
-
-    // Constructors
 
     public AlarmDAO(Context context) {
         mContext = context;
     }
-
-
-    // Public API
 
     public AlarmCursorWrapper select(String[] columns, String selection, String[] selectionArgs,
                                      String groupBy, String having, String orderBy) {
@@ -176,9 +169,6 @@ public class AlarmDAO {
         return delete(alarm.getId());
     }
 
-
-    // Private API
-
     private ContentValues toContentValues(Alarm alarm) {
         ContentValues cv = new ContentValues();
         cv.put(Columns.EXTERNAL_ID, alarm.getExternalId());
@@ -193,5 +183,4 @@ public class AlarmDAO {
 
         return cv;
     }
-
 }

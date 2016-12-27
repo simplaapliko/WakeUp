@@ -38,13 +38,8 @@ public class DialogDateTime extends DialogFragment {
 
     private static final String TAG = "DialogDateTime";
 
-    /**
-     * Class variables to store objects' state.
-     */
     private Calendar mCalendar;
     protected View mRootView;
-
-    // constructors
 
     public static DialogDateTime newInstance() {
         Log.d(TAG, "newInstance()");
@@ -58,9 +53,6 @@ public class DialogDateTime extends DialogFragment {
     public DialogDateTime() {
 
     }
-
-
-    // overridden methods
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,9 +104,6 @@ public class DialogDateTime extends DialogFragment {
 
         return builder.show();
     }
-
-
-    // Private API
 
     private void sendResult(int resultCode) {
         Log.d(TAG, "sendResult()");

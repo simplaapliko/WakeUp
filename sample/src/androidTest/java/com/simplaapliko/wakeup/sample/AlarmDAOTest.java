@@ -26,8 +26,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -39,7 +37,7 @@ public class AlarmDAOTest extends ApplicationTestCase<SampleApplication> {
         super(SampleApplication.class);
     }
 
-    private static final int FAILED = -1;
+    private static final long FAILED = -1;
 
     @Before
     @Override
@@ -57,17 +55,15 @@ public class AlarmDAOTest extends ApplicationTestCase<SampleApplication> {
 
     @Test
     public void testInsertAlarmSuccessful() {
-        int actualId = insert(1, 10, 20, System.currentTimeMillis(), true, "title", "new alarm");
+        long actualId = insert(1, 10, 20, System.currentTimeMillis(), true, "title", "new alarm");
         assertThat(actualId, is(not(equalTo(FAILED))));
     }
 
-    private int insert(int id, int hour, int minutes, long time, boolean enabled, String title, String message) {
+    private long insert(int id, int hour, int minutes, long time, boolean enabled, String title, String message) {
         AlarmDAO alarmDAO = new AlarmDAO(getContext());
 
         Alarm alarm = new Alarm();
         alarm.setExternalId(id);
-        alarm.setHour(hour);
-        alarm.setMinutes(minutes);
         alarm.setTime(time);
         alarm.setEnabled(enabled);
         alarm.setTitle(title);
@@ -76,5 +72,4 @@ public class AlarmDAOTest extends ApplicationTestCase<SampleApplication> {
 
         return alarmDAO.insert(alarm);
     }
-
 }

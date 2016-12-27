@@ -92,5 +92,4 @@ public class SendNotification extends AlarmHandleListener {
         return (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
-
 }

@@ -30,7 +30,6 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BootReceiver";
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive, action = " + intent.getAction());
@@ -54,5 +53,4 @@ public class BootReceiver extends BroadcastReceiver {
             }
         }
     }
-
 }

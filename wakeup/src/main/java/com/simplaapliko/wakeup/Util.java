@@ -23,7 +23,6 @@ public class Util {
 
     private static final String TAG = "Util";
 
-
     public static AlarmHandleListener getInstance(String className) {
         
         if (className == null) {
@@ -52,5 +51,4 @@ public class Util {
 
         return (AlarmHandleListener) instance;
     }
-
 }

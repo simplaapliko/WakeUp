@@ -25,7 +25,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     private static final String TAG = "AlarmReceiver";
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive");
@@ -35,5 +34,4 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         startWakefulService(context, service);
     }
-
 }

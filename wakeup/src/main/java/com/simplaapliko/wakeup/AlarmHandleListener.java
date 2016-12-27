@@ -26,5 +26,4 @@ public abstract class AlarmHandleListener {
     }
 
     public abstract void onHandle(Context context, Intent intent);
-
 }

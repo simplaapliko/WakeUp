@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String ALARM_ID_KEY = "com.simplaapliko.wakeup.sample.ui.ALARM_ID_KEY";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
@@ -59,5 +58,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "onNewIntent: external id received: " + alarmId, Toast.LENGTH_SHORT).show();
         }
     }
-
 }
