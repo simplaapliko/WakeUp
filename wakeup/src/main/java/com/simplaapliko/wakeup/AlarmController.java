@@ -27,20 +27,19 @@ public class AlarmController {
 
     public static final String ALARM_ALERT_ACTION = "com.simplaapliko.wakeup.ALARM_ALERT_ACTION";
 
-    public static final String EXTRA_ALARM = "com.simplaapliko.wakeup.EXTRA_ALARM";
+    public static final String EXTRA_ALARM_ID = "com.simplaapliko.wakeup.EXTRA_ALARM_ID";
+    public static final String EXTRA_EXTERNAL_ID = "com.simplaapliko.wakeup.EXTRA_EXTERNAL_ID";
+    public static final String EXTRA_TITLE = "com.simplaapliko.wakeup.EXTRA_TITLE";
+    public static final String EXTRA_MESSAGE = "com.simplaapliko.wakeup.EXTRA_MESSAGE";
+    public static final String EXTRA_WHEN = "com.simplaapliko.wakeup.EXTRA_WHEN";
+    public static final String EXTRA_HANDLER = "com.simplaapliko.wakeup.EXTRA_HANDLER";
 
     private static final String TAG = "AlarmController";
 
-
-    // Constructors
-
     public AlarmController() {}
 
-
-    // Public API
-
     public void setAlarm(Context context, Alarm alarm) {
-        Log.d(TAG, "setAlarm");
+        Log.d(TAG, "setAlarm: " + alarm);
 
         long id = new AlarmDAO(context)
                 .insert(alarm);
@@ -51,7 +50,7 @@ public class AlarmController {
     }
 
     public void cancelAlarm(Context context, Alarm alarm) {
-        Log.d(TAG, "cancelAlarm");
+        Log.d(TAG, "cancelAlarm: " + alarm);
 
         int count = new AlarmDAO(context)
                 .delete(alarm);
@@ -66,7 +65,7 @@ public class AlarmController {
      * @param externalId External id to be disabled
      */
     public void cancelAlarm(Context context, long externalId) {
-        Log.d(TAG, "cancelAlarm");
+        Log.d(TAG, "cancelAlarm by externalId: " + externalId);
 
         Alarm alarm = new AlarmDAO(context)
                 .selectByExternalId(externalId);
@@ -75,11 +74,16 @@ public class AlarmController {
     }
 
     public void enableAlarm(Context context, Alarm alarm) {
-        Log.d(TAG, "enableAlarm");
+        Log.d(TAG, "enableAlarm: " + alarm);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.setAction(ALARM_ALERT_ACTION);
-        intent.putExtra(EXTRA_ALARM, alarm);
+        intent.putExtra(EXTRA_ALARM_ID, alarm.getId());
+        intent.putExtra(EXTRA_EXTERNAL_ID, alarm.getExternalId());
+        intent.putExtra(EXTRA_TITLE, alarm.getTitle());
+        intent.putExtra(EXTRA_MESSAGE, alarm.getMessage());
+        intent.putExtra(EXTRA_WHEN, alarm.getTime());
+        intent.putExtra(EXTRA_HANDLER, alarm.getAlarmHandleListener());
 
         int alarmId = (int) alarm.getId();
         long triggerAt = alarm.getTime();
@@ -100,7 +104,7 @@ public class AlarmController {
     }
 
     public void disableAlarm(Context context, Alarm alarm) {
-        Log.d(TAG, "disableAlarm");
+        Log.d(TAG, "disableAlarm: " + alarm);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.setAction(ALARM_ALERT_ACTION);
@@ -115,5 +119,4 @@ public class AlarmController {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(sender);
     }
-
 }

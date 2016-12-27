@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.simplaapliko.wakeup.Alarm;
 import com.simplaapliko.wakeup.AlarmController;
@@ -32,17 +33,27 @@ import com.simplaapliko.wakeup.sample.ui.MainActivity;
 
 public class SendNotification extends AlarmHandleListener {
 
+    private static final String TAG = "SendNotification";
+
     @Override
     public void onHandle(Context context, Intent intent) {
+        Log.d(TAG, "onHandle");
 
-        Alarm alarm = intent.getParcelableExtra(AlarmController.EXTRA_ALARM);
+        if (intent == null) {
+            // nothing to do
+            Log.d(TAG, "intent is null");
+            return;
+        }
+
+        long alarmId = intent.getLongExtra(AlarmController.EXTRA_ALARM_ID, -1);
+        long externalId = intent.getLongExtra(AlarmController.EXTRA_EXTERNAL_ID, -1);
+        String title = intent.getStringExtra(AlarmController.EXTRA_TITLE);
+        String text = intent.getStringExtra(AlarmController.EXTRA_MESSAGE);
+        long when = intent.getLongExtra(AlarmController.EXTRA_WHEN, Alarm.NOT_SET);
+
         int smallIcon = R.mipmap.ic_launcher;
 
-        int notificationId = (int) alarm.getId();
-        long externalId = alarm.getExternalId();
-        String title = alarm.getTitle();
-        String text = alarm.getMessage();
-        long when = alarm.getTime();
+        int notificationId = (int) alarmId;
 
         Notification notification;
 

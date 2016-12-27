@@ -32,30 +32,34 @@ public class AlarmService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "onHandleIntent");
 
-        // get alarm from extras
-        Alarm alarm = intent.getParcelableExtra(AlarmController.EXTRA_ALARM);
-
-        if (alarm == null) {
-            Log.e(TAG, "alarm extra is null");
+        if (intent == null) {
+            // nothing to do
+            Log.d(TAG, "intent is null");
             return;
         }
 
+        AlarmDAO alarmDAO = new AlarmDAO(this);
+
+        // get alarm from extras
+        long notFound = -1;
+        long alarmId = intent.getLongExtra(AlarmController.EXTRA_ALARM_ID, notFound);
+
         // delete alarm from the database
-        new AlarmDAO(this).delete(alarm);
+        alarmDAO.delete(alarmId);
 
         // get listener using class name and reflection
-        AlarmHandleListener listener = Util.getInstance(alarm.getAlarmHandleListener());
+        String handler = intent.getStringExtra(AlarmController.EXTRA_HANDLER);
+        AlarmHandleListener listener = Util.getInstance(handler);
 
         // call onHandle
         if (listener != null) {
             listener.onHandle(this, intent);
         } else {
-            Log.i(TAG, "not able to get new instance for class " + alarm.getAlarmHandleListener());
+            Log.i(TAG, "not able to get new instance for class " + handler);
         }
 
         // Finish the execution from a previous startWakefulService(Context, Intent).
         // Any wake lock that was being held will now be released.
         AlarmReceiver.completeWakefulIntent(intent);
     }
-
 }
