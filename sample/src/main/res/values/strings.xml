@@ -16,4 +16,7 @@
 
 <resources>
     <string name="app_name">WakeUp Sample</string>
+    <string name="exact">Exact</string>
+    <string name="set">set</string>
+    <string name="refresh">refresh</string>
 </resources>

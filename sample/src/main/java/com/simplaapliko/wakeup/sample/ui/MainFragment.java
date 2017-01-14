@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,12 +34,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ResourceCursorAdapter;
-import android.widget.TextView;
 
 import com.simplaapliko.wakeup.Alarm;
 import com.simplaapliko.wakeup.AlarmController;
-import com.simplaapliko.wakeup.AlarmCursorWrapper;
 import com.simplaapliko.wakeup.AlarmDAO;
 import com.simplaapliko.wakeup.sample.R;
 import com.simplaapliko.wakeup.sample.util.SendNotification;
@@ -46,53 +44,7 @@ import com.simplaapliko.wakeup.sample.util.SendNotification;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
-    private static class AlarmAdapter extends ResourceCursorAdapter {
-
-        static class ViewHolder {
-            TextView nameTextView;
-            TextView dateTextView;
-        }
-
-        private LayoutInflater mLayoutInflater;
-
-        public AlarmAdapter(Context context, Cursor c) {
-            super(context, R.layout.list_item, c, 0);
-
-            mLayoutInflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewHolder holder;
-
-            if (convertView == null) {
-                convertView = mLayoutInflater.inflate(R.layout.list_item, parent, false);
-
-                holder = new ViewHolder();
-                holder.nameTextView = (TextView) convertView.findViewById(R.id.name);
-                holder.dateTextView = (TextView) convertView.findViewById(R.id.date);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            Alarm alarm = ((AlarmCursorWrapper) getItem(position)).getAlarm();
-
-            holder.nameTextView.setText(alarm.toString());
-            holder.dateTextView.setText(new Date(alarm.getTime()).toString());
-
-            return convertView;
-        }
-    }
+public class MainFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final int REQUEST_SELECT_DATE = 0;
     public static final String SELECTED_DATE_EXTRA = "com.simplaapliko.wakeup.sample.SELECTED_DATE_EXTRA";
@@ -101,10 +53,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private static final String PREF_EXTERNAL_ID = "external_id";
 
+    private AppCompatCheckBox mExactCheckBox;
     private ListView mList;
     private long mId;
 
-    public MainActivityFragment() {
+    public MainFragment() {
     }
 
     @Override
@@ -120,6 +73,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        mExactCheckBox = (AppCompatCheckBox) rootView.findViewById(R.id.exact);
         mList = (ListView) rootView.findViewById(R.id.list);
         registerForContextMenu(mList);
 
@@ -128,7 +82,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             @Override
             public void onClick(View v) {
                 DialogDateTime dialog = DialogDateTime.newInstance();
-                dialog.setTargetFragment(MainActivityFragment.this, REQUEST_SELECT_DATE);
+                dialog.setTargetFragment(MainFragment.this, REQUEST_SELECT_DATE);
                 dialog.show(getFragmentManager(), null);
             }
         });
@@ -164,7 +118,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Dialog.BUTTON_NEGATIVE) {
+        if (resultCode == Dialog.BUTTON_NEGATIVE) {
             return;
         }
 
@@ -208,7 +162,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         Alarm alarm = new Alarm();
         alarm.setExternalId(mId);
-        alarm.setExact(true);
+        alarm.setExact(mExactCheckBox.isChecked());
         alarm.setType(Alarm.RTC_WAKEUP);
         alarm.setTime(calendar.getTimeInMillis());
         alarm.setEnabled(true);

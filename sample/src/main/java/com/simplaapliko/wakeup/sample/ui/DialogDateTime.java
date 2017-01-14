@@ -71,7 +71,7 @@ public class DialogDateTime extends DialogFragment {
         Log.d(TAG, "onCreateDialog()");
 
         // get root view
-        mRootView = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_date_time, null);
+        mRootView = getActivity().getLayoutInflater().inflate(R.layout.dialog_date_time, null);
 
         initUiWidgets(mRootView);
 
@@ -109,7 +109,7 @@ public class DialogDateTime extends DialogFragment {
         Log.d(TAG, "sendResult()");
 
         Intent intent = new Intent();
-        intent.putExtra(MainActivityFragment.SELECTED_DATE_EXTRA, mCalendar.getTime());
+        intent.putExtra(MainFragment.SELECTED_DATE_EXTRA, mCalendar.getTime());
 
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
