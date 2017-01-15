@@ -17,10 +17,8 @@
 package com.simplaapliko.wakeup;
 
 import android.app.AlarmManager;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-public class Alarm implements Parcelable {
+public class Alarm {
 
     /**
      * A reference to {@link android.app.AlarmManager#RTC_WAKEUP}
@@ -153,50 +151,4 @@ public class Alarm implements Parcelable {
                 ", mAlarmHandleListener='" + mAlarmHandleListener + '\'' +
                 '}';
     }
-
-    // Parcelable
-
-    protected Alarm(Parcel in) {
-        mId = in.readLong();
-        mExternalId = in.readLong();
-        mExact = in.readInt() == 1;
-        mType = in.readInt();
-        mTime = in.readLong();
-        mEnabled = in.readInt() == 1;
-        mTitle = in.readString();
-        mMessage = in.readString();
-        mKeepAfterReboot = in.readInt() == 1;
-        mAlarmHandleListener = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mId);
-        dest.writeLong(mExternalId);
-        dest.writeInt(mExact ? 1 : 0);
-        dest.writeInt(mType);
-        dest.writeLong(mTime);
-        dest.writeInt(mEnabled ? 1 : 0);
-        dest.writeString(mTitle);
-        dest.writeString(mMessage);
-        dest.writeInt(mKeepAfterReboot ? 1 : 0);
-        dest.writeString(mAlarmHandleListener);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator<Alarm> CREATOR = new Parcelable.Creator<Alarm>() {
-        @Override
-        public Alarm createFromParcel(Parcel in) {
-            return new Alarm(in);
-        }
-
-        @Override
-        public Alarm[] newArray(int size) {
-            return new Alarm[size];
-        }
-    };
 }
